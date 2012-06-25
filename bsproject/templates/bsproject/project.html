@@ -1,0 +1,11 @@
+{% extends 'bsproject/base.html' %}
+  {% block primary %}
+<div class="well">
+  <div class="page-header">
+    <h2>{{ project.name }}</h2>
+    <em>Created {{ project.created_date|date:"N j, Y, P T" }}</em>
+  </div>
+  <hr />
+  {{ project.description|safe }}
+</div>
+{% endblock %}

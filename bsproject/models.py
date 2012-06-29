@@ -2,12 +2,24 @@ from django.db import models
 
 import markdown
 
+class HostingService(models.Model):
+    """Places that do project and code hosting"""
+    name = models.CharField(max_length=50)
+    url = models.URLField(max_length=100, blank=True)
+    icon = models.ImageField(upload_to='bsproject/hostimages/', blank=True)
+    # lib or django app for api calls/integration?
+
+    def __unicode__(self):
+        return u'%s' %self.name
+
+
 class Language(models.Model):
     name = models.CharField(max_length=50, unique=True)
     description = models.TextField()
 
     def __unicode__(self):
         return u'%s' %self.name
+
 
 class Project(models.Model):
     name = models.CharField(max_length=50)
@@ -18,6 +30,9 @@ class Project(models.Model):
     other_languages = models.ManyToManyField('Language', db_index=True, blank=True, null=True,
                                              related_name='project_other_languages_set')
     created_date = models.DateTimeField(auto_now_add=True)
+    modified_date = models.DateTimeField(auto_now=True)
+    hosting_services = models.ManyToManyField(HostingService, blank=True, through='ProjectHostingService',
+                                              help_text='Place the code or project may be hosted')
 
     def __unicode__(self):
         return u'%s' %self.name
@@ -30,3 +45,12 @@ class Project(models.Model):
     def get_absolute_url(self):
         return ('bsproject_project', [self.name])
 
+
+class ProjectHostingService(models.Model):
+    project = models.ForeignKey(Project, db_index=True)
+    hosting_service = models.ForeignKey(HostingService, db_index=True)
+    project_url = models.URLField(blank=True, help_text='The website URL for the project')
+    public_vcs_uri = models.URLField(blank=True, help_text='The URI that can be used to clone, checkout, etc. the project')
+
+    def __unicode__(self):
+        return u'%s: %s' %(self.project, self.hosting_service)

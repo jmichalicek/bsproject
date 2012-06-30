@@ -17,7 +17,12 @@
       <p>View this project on:</p>
       <p>
 	{% for host in project.projecthostingservice_set.all %}
-	{{ host.hosting_service }}{% if host.public_vcs_uri and host.vcs %} <a href="{{ host.public_vcs_url }}"><i class="icon-download icon-white"></i></a>{% endif %}{% if host.project_url %} <a href="{{ host.project_url }}">Project</a>{% endif %}<br />
+	{# this all ends up on one line when output by the browser #}
+	{{ host.hosting_service }} |
+	{% if host.project_url %} <a href="{{ host.project_url }}">project page</a>{% endif %}
+	{% if host.public_vcs_uri and host.vcs %} {% if host.project_url %} - {% endif %}
+	<a href="{{ host.public_vcs_uri }}">{{ host.vcs }}</a>
+	{% endif %}<br />
 	{% endfor %}
       </p>
     </div>

@@ -1,11 +1,27 @@
 {% extends 'bsproject/base.html' %}
-  {% block primary %}
-<div class="well">
-  <div class="page-header">
-    <h2>{{ project.name }}</h2>
-    <em>Created {{ project.created_date|date:"N j, Y, P T" }}</em>
+{% block primary %}
+<div class="row">
+  <div class="span8">
+    {{ project.description|safe }}
   </div>
-  <hr />
-  {{ project.description|safe }}
+  <div class="span4">
+    <div class="well">
+      <h2>{{ project.name }}</h2>
+      <p>
+	Created: {{ project.created_date|date:"m/d/Y" }}<br />
+	Page updated: {{ project.created_date|date:"m/d/Y" }}
+      </p>
+    </div>
+    {% if project.hosting_services.all.count > 0 %}
+    <div class="well">
+      <p>View this project on:</p>
+      <p>
+	{% for host in project.projecthostingservice_set.all %}
+	{{ host.hosting_service }}{% if host.public_vcs_uri and host.vcs %} <a href="{{ host.public_vcs_url }}"><i class="icon-download icon-white"></i></a>{% endif %}{% if host.project_url %} <a href="{{ host.project_url }}">Project</a>{% endif %}<br />
+	{% endfor %}
+      </p>
+    </div>
+    {% endif %}
+  </div>
 </div>
 {% endblock %}

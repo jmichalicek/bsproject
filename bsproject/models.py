@@ -30,7 +30,7 @@ class Project(models.Model):
     other_languages = models.ManyToManyField('Language', db_index=True, blank=True, null=True,
                                              related_name='project_other_languages_set')
     created_date = models.DateTimeField(auto_now_add=True)
-    modified_date = models.DateTimeField(auto_now=True)
+    modified_date = models.DateTimeField(auto_now=True, auto_now_add=True)
     hosting_services = models.ManyToManyField(HostingService, blank=True, through='ProjectHostingService',
                                               help_text='Place the code or project may be hosted')
 
@@ -51,6 +51,13 @@ class ProjectHostingService(models.Model):
     hosting_service = models.ForeignKey(HostingService, db_index=True)
     project_url = models.URLField(blank=True, help_text='The website URL for the project')
     public_vcs_uri = models.URLField(blank=True, help_text='The URI that can be used to clone, checkout, etc. the project')
+    vcs = models.ForeignKey('VersionControlSystem', db_index=True, null=True, blank=True)
 
     def __unicode__(self):
         return u'%s: %s' %(self.project, self.hosting_service)
+    
+class VersionControlSystem(models.Model):
+    name = models.CharField(max_length=25)
+    
+    def __unicode__(self):
+        return u'%s' %self.name

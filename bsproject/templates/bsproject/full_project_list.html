@@ -1,16 +1,18 @@
 {% extends 'bsproject/base.html' %}
 {% block primary %}
 {% regroup projects by primary_language as languages %}
-<div class="container">
   {% for language in languages %}
-  <div class="well" id="{{ language.grouper }}">
-    <h3>{{ language.grouper }}</h3>
-    <ul>
-      {% for project in language.list %}
-      <li><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></li>
-      {% endfor %}
-    </ul>
+  <div class="row">
+    <div class="span12" id="{{ language.grouper }}">
+      <div class="well">
+	<h3>{{ language.grouper }}</h3>
+	<ul>
+	  {% for project in language.list %}
+	  <li><a href="{{ project.get_absolute_url }}">{{ project.name }}</a></li>
+	  {% endfor %}
+	</ul>
+      </div>
+    </div>
   </div>
   {% endfor %}
-</div>
 {% endblock %}

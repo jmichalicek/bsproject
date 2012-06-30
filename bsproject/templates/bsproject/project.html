@@ -9,7 +9,7 @@
       <h2>{{ project.name }}</h2>
       <p>
 	Created: {{ project.created_date|date:"m/d/Y" }}<br />
-	Page updated: {{ project.created_date|date:"m/d/Y" }}
+	Page updated: {{ project.modified_date|date:"m/d/Y" }}
       </p>
     </div>
     {% if project.hosting_services.all.count > 0 %}

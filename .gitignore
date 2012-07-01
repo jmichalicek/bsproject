@@ -1,3 +1,5 @@
 *.pyc
 *~
 bsproject.egg-info
+build
+dist

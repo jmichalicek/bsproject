@@ -1,11 +1,11 @@
-from django.utils import unittest
+from django.test import TestCase
 from django.core.exceptions import ValidationError
 from django.core.urlresolvers import reverse
 from django.test.client import Client
 
 from models import *
 
-class HostingServiceTests(unittest.TestCase):
+class HostingServiceTests(TestCase):
     """Test the HostingService model"""
 
     def setUp(self):
@@ -19,7 +19,7 @@ class HostingServiceTests(unittest.TestCase):
 
         self.assertEqual(self.hosting_service.name, self.hosting_service.__unicode__())
 
-class LanguageTests(unittest.TestCase):
+class LanguageTests(TestCase):
     """Test the Language model"""
 
     def setUp(self):
@@ -36,7 +36,7 @@ class LanguageTests(unittest.TestCase):
         new_language.name = self.language.name
         self.assertRaises(ValidationError, new_language.validate_unique)
 
-class ProjectTests(unittest.TestCase):
+class ProjectTests(TestCase):
     """Test the Project model"""
 
     def setUp(self):
@@ -58,7 +58,7 @@ class ProjectTests(unittest.TestCase):
         self.assertEqual(self.project.description, '''<p><strong>test</strong></p>''')
 
 
-class FullProjectListViewTests(unittest.TestCase):
+class FullProjectListViewTests(TestCase):
     """Tests the full_project_list view"""
 
     def setUp(self):
@@ -78,7 +78,7 @@ class FullProjectListViewTests(unittest.TestCase):
         projects = response.context['projects']
         self.assertTrue(self.project in projects)
 
-class ProjectViewTest(unittest.TestCase):
+class ProjectViewTest(TestCase):
     """Tests the project() view"""
 
     def setUp(self):

@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 package_data = ['templates/bsproject/*.html', 'static/bsproject/js/*', 'static/bsproject/css/*',
                 'static/bsproject/img/*']
-dependencies = ['Markdown']
+dependencies = ['Markdown==2.0.3']
 # Untested below... 
 # dependency_links = ['https://github.com/jmichalicek/django-taxonomies/zipball/master#egg=django-taxonomies1.0']
 setup(name = "bsproject",

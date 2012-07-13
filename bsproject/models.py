@@ -55,6 +55,12 @@ class ProjectHostingService(models.Model):
 
     def __unicode__(self):
         return u'%s: %s' %(self.project, self.hosting_service)
+
+class ProjectNews(models.Model):
+    project = models.ForeignKey(Project, db_index=True)
+    date_created = models.DateTimeField(auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True, auto_now_add=True)
+    text_html = models.TextField()
     
 class VersionControlSystem(models.Model):
     name = models.CharField(max_length=25)

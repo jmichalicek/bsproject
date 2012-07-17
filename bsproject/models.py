@@ -60,7 +60,12 @@ class ProjectNews(models.Model):
     project = models.ForeignKey(Project, db_index=True)
     date_created = models.DateTimeField(auto_now_add=True)
     date_modified = models.DateTimeField(auto_now=True, auto_now_add=True)
-    text_html = models.TextField()
+    text_html = models.TextField(blank=True)
+    text_markdown = models.TextField()
+
+    def save(self):
+        self.text_html = markdown.markdown(self.text_markdown, safe_mode=False)
+        super(ProjectNews,self).save()
     
 class VersionControlSystem(models.Model):
     name = models.CharField(max_length=25)

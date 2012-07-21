@@ -12,7 +12,7 @@ class HostingServiceAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ('name','primary_language','created_date')
+    list_display = ('name','primary_language','created_date', 'modified_date')
     search_fields = ['name', 'description_markdown']
     list_filter = ('primary_language',)
     fieldsets = (
@@ -28,7 +28,7 @@ class ProjectHostingServiceAdmin(admin.ModelAdmin):
     search_fields = ['project__name']
 
 class ProjectNewsAdmin(admin.ModelAdmin):
-    list_display = ('text_html', 'project', 'published')
+    list_display = ('text_html', 'project', 'date_created', 'date_modified', 'published')
     list_filter = ('project',)
     list_editable = ['published']
     search_fields = ['project__name']

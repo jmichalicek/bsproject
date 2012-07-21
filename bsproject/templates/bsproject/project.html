@@ -23,10 +23,11 @@
   <div class="span4">
     <div class="well">
       <h2>{{ project.name }}</h2>
-      <p>
-	Created: {{ project.created_date|date:"m/d/Y" }}<br />
-	Page updated: {{ project.modified_date|date:"m/d/Y" }}
-      </p>
+      <dl class="dl-horizontal">
+	<dt><span class="pull-left">Created:</span></dt><dd>{{ project.created_date|date:"M d, Y" }}</dd>
+	<dt><span class="pull-left">Page updated:</span></dt><dd>{{ project.modified_date|date:"M d, Y" }}</dd>
+	<dt><span class="pull-left">Latest News:</span></dt><dd>{% if project_news.count > 0 %}{{ project_news.0.date_created|date:"M d, Y" }}{% endif %}</dd>
+      </dl>
     </div>
     {% if project.hosting_services.all.count > 0 %}
     <div class="well">

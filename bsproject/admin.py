@@ -27,8 +27,18 @@ class ProjectHostingServiceAdmin(admin.ModelAdmin):
     list_filter = ['hosting_service', 'vcs']
     search_fields = ['project__name']
 
+class ProjectNewsAdmin(admin.ModelAdmin):
+    list_display = ('text_html', 'project', 'published')
+    list_filter = ('project',)
+    list_editable = ['published']
+    search_fields = ['project__name']
+    fieldsets = (
+        (None, {'fields': ['project', 'text_markdown', 'published']}),
+        )
+
 admin.site.register(HostingService, HostingServiceAdmin)
 admin.site.register(Language)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(ProjectHostingService, ProjectHostingServiceAdmin)
+admin.site.register(ProjectNews, ProjectNewsAdmin)
 admin.site.register(VersionControlSystem)

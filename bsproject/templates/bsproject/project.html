@@ -1,8 +1,24 @@
 {% extends 'bsproject/base.html' %}
 {% block primary %}
+<ul class="nav nav-tabs">
+  <li class="active"><a href="#info" data-toggle="tab">Info</a></li>
+  <li><a href="#news" data-toggle="tab">News</a></li>
+</ul>
 <div class="row">
-  <div class="span8">
-    {{ project.description|safe }}
+  <div class="tab-content span8">
+    <div class="tab-pane active" id="info">
+      {{ project.description|safe }}
+    </div>
+    <div class="tab-pane" id="news">
+      <dl>
+	{% for news in project_news %}
+	<dt>{{ news.date_created }}</dt>
+	<dd>{{ news.text_html|safe }}</dd>
+	{% empty %}
+	<dd>Nothing to see here, move along.</dd>
+	{% endfor %}
+      </dl>
+    </div>
   </div>
   <div class="span4">
     <div class="well">

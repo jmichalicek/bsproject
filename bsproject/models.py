@@ -2,6 +2,7 @@ from django.db import models
 
 import markdown
 
+
 class HostingService(models.Model):
     """Places that do project and code hosting"""
     name = models.CharField(max_length=50)
@@ -67,9 +68,12 @@ class ProjectNews(models.Model):
     def save(self):
         self.text_html = markdown.markdown(self.text_markdown, safe_mode=False)
         super(ProjectNews,self).save()
-    
+
+    def __unicode__(self):
+        return u'%s' %self.text_html
+
 class VersionControlSystem(models.Model):
     name = models.CharField(max_length=25)
-    
+
     def __unicode__(self):
         return u'%s' %self.name

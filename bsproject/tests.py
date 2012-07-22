@@ -83,6 +83,11 @@ class ProjectViewTest(TestCase):
 
     def setUp(self):
         self.project = Project.objects.create(name='Test Project')
+        pnews = ProjectNews(published=True, project=self.project,
+                            text_markdown='fake news!')
+        pnews.full_clean()
+        pnews.save()
+
         self.client = Client()
 
     def tearDown(self):
@@ -95,3 +100,36 @@ class ProjectViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertTrue('project' in response.context)
         self.assertEqual(self.project, response.context['project'])
+        self.assertTrue('project_news' in response.context)
+        self.assertEqual(response.context['project_news'].count(), 1)
+
+class ProjectNewsTest(TestCase):
+    """Test the ProjectNews model"""
+
+    def setUp(self):
+        self.project = Project.objects.create(name='Test Project')
+
+    def test_save_method(self):
+        news = ProjectNews()
+        news.project = self.project
+        news.text_markdown = '**test**'
+        news.full_clean()
+        news.save()
+        self.assertEqual(news.text_html, '''<p><strong>test</strong></p>''')
+
+    def test_unicode_method(self):
+        news = ProjectNews()
+        news.project = self.project
+        news.text_markdown = '**test**'
+        news.full_clean()
+        news.save()
+        self.assertEqual(news.__unicode__(), news.text_html)
+
+    def test_published_default(self):
+        """Default value of published should be False"""
+        news = ProjectNews(project=self.project, text_markdown='test')
+        news.full_clean()
+        news.save()
+        self.assertFalse(news.published)
+
+

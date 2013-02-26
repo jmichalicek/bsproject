@@ -2,12 +2,11 @@
 language: python
 # List the versions of Python you'd like to test against
 python:
-  - "2.5"
   - "2.6"
   - "2.7"
 # List the versions of Django you'd like to test against
 env:
-  - DJANGO_VERSION=1.4
+  - DJANGO_VERSION=1.5
 # Tell it the things it will need to install when it boots
 install:
  - pip install -q -r travis.pip
